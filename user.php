@@ -64,5 +64,23 @@
         public function removeAll(){
             return null;
         }
+        public function validateForm()
+        {
+            $fn = $this->first_name;
+            $ln = $this->last_name;
+            $city = $this->city_name;
+    
+            if($fn == "" || $ln == "" || $city == "")
+            {
+                return false;
+            }
+            return true;
+        }
+    
+        public function createFormErrorSessions()
+        {
+            session_start();
+            $_SESSION['form_errors'] = 'All fields are required';
+        }
     }
 ?>
