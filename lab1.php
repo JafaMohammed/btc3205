@@ -72,7 +72,7 @@
                 <td><input type="password" name="password" id="password"></td>
             </tr>
             <tr>
-            <td><button type="submit" name="btn-save"><strong>Save</button></button></td>
+            <td><button type="submit" name="btn-save"><strong>SAVE</button></button></td>
             </tr>
             <tr>
             <td><a href="login.php">LOGIN</a></td>
