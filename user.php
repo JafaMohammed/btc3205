@@ -37,12 +37,6 @@
 
 
 
-
-
-
-
-
-
         public function readAll(){
             $con = new DBConnector();
             $array = array();
