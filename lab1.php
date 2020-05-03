@@ -61,8 +61,20 @@
             <td><input type="text" name="city_name" placeholder="City"/></td>
             </tr>
             <tr>
+                <td><label for="uname">Username</label></td>
+                <td><input type="text" name="user_name" id="uname" placeholder="Username"></td>
+            </tr>
+            <tr>
+                <td><label for="password">Password</label></td>
+                <td><input type="password" name="password" id="password"></td>
+            </tr>
+            <tr>
             <td><button type="submit" name="btn-save"><strong>Save</button></button></td>
             </tr>
+            <tr>
+            <td><a href="login.php">LOGIN</a></td>
+            </tr>
+            
             </table>
         </form>
 </body>
