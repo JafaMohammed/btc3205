@@ -36,20 +36,45 @@
         public function setUserId($user_id){
             $this->user_id = $user_id;
         }
-        
+
 
         public function getUserId(){
             return $this->$user_id;
         }
+        public function setUsername($username)
+        {
+            $this->username = $username;
+        }
+    
+       
+        public function getUsername()
+        {
+            return $this->username;
+        }
+    
+        public function setPassword($password)
+        {
+            $this->password = $password;
+        }
 
+        public function getPassword()
+        {
+            return $this->password;
+        }
+    
+       
+      
     
         public function save(){
             $con = new DBConnector();
             $fn = $this->first_name;
             $ln = $this->last_name;
             $city = $this->city_name;
+            $username = $this->username;
+            $this->hashPassword();
+            $pass = $this->password;
            
-            $res = mysqli_query($con->conn,"INSERT INTO user(first_name, last_name,user_city)VALUES('$fn','$ln','$city')") or die("Error " .mysqli_error());    
+            $res = mysqli_query($con->conn,"INSERT INTO user(first_name, last_name,user_city,username,password) VALUES('$fn','$ln','$city', '$username', '$pass')") or die("Error " .mysqli_error());    
             return $res;
             $con->closeDatabase();
         }
@@ -101,5 +126,39 @@
             session_start();
             $_SESSION['form_errors'] = 'All fields are required';
         }
+        public function hashPassword()
+        {
+            //inbuilt function password_hash hases our passwords
+            $this->password = password_hash($this->password,PASSWORD_DEFAULT);
+        }
+        public function isPasswordCorrect($username,$password){
+            $con = new DBConnector;
+            $found = false;
+            $res = mysqli_query($con->conn,'SELECT * FROM user') or die("Error" .mysqli_error());
+       
+       while($row = $res->fetch_assoc()){
+           if(password_verify($password,$row['password'] && $username == $row['username'])){
+               $found=true;
+           }
+       }
+    }
+    public function login(){
+        if($this->isPasswordCorrect()){
+            //password is correct so we load the protected page
+            header("Location:private_page.php");
+        }
+    }
+
+    public  function createUserSession($username){
+        session_start();
+        $_SESSION['username'] = $username;
+
+    }
+    public function logout(){
+        session_start();
+        unset($_SESSION['username']);
+        session_destroy();
+        header("Location:lab1.php");
+    }
     }
 ?>

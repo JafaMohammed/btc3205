@@ -1,5 +1,4 @@
 <?php
-
 interface Authenticator
 {
     public function hashPassword();
@@ -8,3 +7,4 @@ interface Authenticator
     public static function logout();
     public function createFormErrorSessions();
 }
+?>
