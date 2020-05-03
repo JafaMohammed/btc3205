@@ -1,23 +1,42 @@
 <?php
     require 'crud.php';
-    // require 'dbConnect.php';
-    class User implements Crud{
+    require 'dbConnect.php';
+    include 'authenticator.php';
+    class User implements Crud, Authenticator{
         private $user_id;
         private $first_name;
         private $last_name;
         private $city_name;
+
+        private $username;
+        private $password;
  
 
         function __construct($first_name,$last_name,$city_name){
             $this->first_name = $first_name;
             $this->last_name = $last_name;
             $this->city_name = $city_name;
+
+            $this->username = $username;
+            $this->password = $password;
         
         }
+        //php does not allow multilee constructors, because when we log in,
+        // we do not have all the details we onlyhave username and password
+        //and we still need to use this same class.
+        //We make this methid static so that we access it wuth the class rarher than object 
 
+
+        //static constructor
+
+        public static function create() {
+            $instance = new self();
+            return $instance;
+        }
         public function setUserId($user_id){
             $this->user_id = $user_id;
         }
+        
 
         public function getUserId(){
             return $this->$user_id;

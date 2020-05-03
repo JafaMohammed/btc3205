@@ -11,6 +11,12 @@
         $city = $_POST['city_name'];
 
         $user = new User($first_name,$last_name,$city);
+        if(!$user->validateForm()){
+            $user->createFormErrorSessions();
+            header("Refresh:0");
+            die();
+          }
+         
         $res = $user->save($con->conn);
         if($res){
             echo "Record Saved!";
@@ -25,6 +31,7 @@
 <head>
     <title>Lab1</title>
     <script type="text/javascript" src="validate.js"></script>
+    <link rel="stylesheet" type="text/css" href="validate.css">
 </head>
 <body>
 <form method="post" name="user_details" id="user_details" onsubmit="return validateForm()"
