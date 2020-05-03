@@ -24,10 +24,26 @@
 <html>
 <head>
     <title>Lab1</title>
+    <script type="text/javascript" src="validate.js"></script>
 </head>
 <body>
-        <form method="POST" action="<?php  echo $_SERVER['PHP_SELF']?>">
+<form method="post" name="user_details" id="user_details" onsubmit="return validateForm()"
+              action="<?php  echo $_SERVER['PHP_SELF']?>">
         <table align="center">
+        <tr>
+                <td>
+                    <div id="form-errors">
+                        <?php
+                            session_start();
+                            if(!empty($_SESSION['form_errors']))
+                            {
+                                echo " ".$_SESSION['form_errors'];
+                                unset($_SESSION['form_errors']);
+                            }
+                        ?>
+                    </div>
+                </td>
+            </tr>
         <tr>
            <td><input type="text" name="first_name" placeholder="First Name"/></td>
            </tr>
