@@ -7,7 +7,6 @@
         private $first_name;
         private $last_name;
         private $city_name;
-
         private $username;
         private $password;
  
@@ -16,7 +15,6 @@
             $this->first_name = $first_name;
             $this->last_name = $last_name;
             $this->city_name = $city_name;
-
             $this->username = $username;
             $this->password = $password;
         
@@ -29,7 +27,9 @@
 
         //static constructor
 
-        public static function create() {
+    
+        public static function create()
+        {
             $instance = new self();
             return $instance;
         }
@@ -131,18 +131,31 @@
             //inbuilt function password_hash hases our passwords
             $this->password = password_hash($this->password,PASSWORD_DEFAULT);
         }
-        public function isPasswordCorrect($username,$password){
-            $con = new DBConnector;
-            $found = false;
-            $res = mysqli_query($con->conn,'SELECT * FROM user') or die("Error" .mysqli_error());
-       
-       while($row = $res->fetch_assoc()){
-           if(password_verify($password,$row['password'] && $username == $row['username'])){
-               $found=true;
-           }
-       }
+
+    public static function isPasswordCorrect($password,$username)
+    {
+        $con = new DBConnector();
+        $found = false;
+        $result = mysqli_query($con->conn,"SELECT id, username, password FROM user WHERE username='$username'")
+                    or die("Error".mysqli_error($con->conn));
+
+
+        if($result->num_rows > 0)
+        {
+
+            $row = $result->fetch_assoc();
+            if (password_verify($password,$row['password']))
+            {
+                $found = true;
+
+            }
+        }
+
+        $con->closeConnection();
+        return $found;
     }
-    public function login(){
+    
+    public function login($con,$password,$username){
         if($this->isPasswordCorrect()){
             //password is correct so we load the protected page
             header("Location:private_page.php");
@@ -154,7 +167,7 @@
         $_SESSION['username'] = $username;
 
     }
-    public function logout(){
+    public static function logout(){
         session_start();
         unset($_SESSION['username']);
         session_destroy();
