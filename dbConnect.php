@@ -11,8 +11,6 @@ class DBConnector {
 function __construct(){
     $this->conn = mysqli_connect(DB_SERVER,DB_USER,DB_PASS) or die("Error:" .mysqli_connect_error());
     mysqli_select_db( $this->conn,DB_NAME);
-   
-    
 }
 
 public function closeDatabase(){

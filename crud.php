@@ -3,8 +3,8 @@
 interface Crud{
     /* All these methods have to be implemented by any class that implement 
     these interfaces*/
-    public function save();
-    public function readAll();
+    public function save($conn,$path);
+    public function readAll($conn);
     public function readUnique();
     public function search();
     public function update();

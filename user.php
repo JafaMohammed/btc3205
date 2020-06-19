@@ -9,16 +9,38 @@
         private $city_name;
         private $username;
         private $password;
+        //lab 3
+        private $timestamp;
+        private $offset;
  
 
-        function __construct($first_name,$last_name,$city_name){
+        function __construct($first_name,$last_name,$city_name,$password,$timestamp,$offset){
             $this->first_name = $first_name;
             $this->last_name = $last_name;
             $this->city_name = $city_name;
             $this->username = $username;
             $this->password = $password;
+            $this->timestamp = $timestamp;
+            $this->offset = $offset;
         
         }
+        public function getTimestamp()
+        {
+            return $this->timestamp;
+        }public function setTimestamp($timestamp)
+        {
+            $this->timestamp = $timestamp;
+        }
+    
+    
+        public function getOffset()
+        {
+            return $this->offset;
+        }
+      
+
+   
+    
         //php does not allow multilee constructors, because when we log in,
         // we do not have all the details we onlyhave username and password
         //and we still need to use this same class.
@@ -30,7 +52,7 @@
     
         public static function create()
         {
-            $instance = new self();
+            $instance = new self("","","","","","");
             return $instance;
         }
         public function setUserId($user_id){
@@ -73,8 +95,12 @@
             $username = $this->username;
             $this->hashPassword();
             $pass = $this->password;
+        
+            $targetPath = $path;
+            $off = $this->offset;
+            $ts = $this->timestamp;
            
-            $res = mysqli_query($con->conn,"INSERT INTO user(first_name, last_name,user_city,username,password) VALUES('$fn','$ln','$city', '$username', '$pass')") or die("Error " .mysqli_error());    
+            $res = mysqli_query($con->conn,"INSERT INTO user(first_name, last_name,user_city,username,password,image_path,offset,timestamp) VALUES('$fn','$ln','$city', '$username', '$pass','$targetPath',$off,$t)") or die("Error " .mysqli_error());    
             return $res;
             $con->closeDatabase();
         }
@@ -172,6 +198,11 @@
         unset($_SESSION['username']);
         session_destroy();
         header("Location:lab1.php");
+    }
+
+    public function isUserExist()
+    {
+        
     }
     }
 ?>
