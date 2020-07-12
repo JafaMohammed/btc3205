@@ -1,10 +1,11 @@
-<?php
-interface Authenticator
-{
-    public function hashPassword();
-    public static function isPasswordCorrect($password,$username);
-    public function login($con,$password,$username);
-    public static function logout();
-    public function createFormErrorSessions();
+<?php 
+
+interface Authenticator {
+	public function hashPassword();
+	public function isPasswordCorrect();
+	public function login();
+	public function logout();
+	public function createFormErrorSessions($problem);
 }
-?>
+
+ ?>
