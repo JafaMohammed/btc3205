@@ -1,21 +1,19 @@
-<?php
-    include "crud.php";
-    include "authenticate.php";
-    include_once "DBConnector.php";
-    class User implements Crud{
-        private $user_id;
-        private $first_name;
-        private $last_name;
-        private $city_name;
-        private $conn;
-        private $username;
-        private $password;
-        private $data;
-        private $utc_timestamp;
-        private $offset;
-        
+<?php 
+include_once "DBConnector.php";
+include 'crud.php';
+include 'authenticator.php';
+class User implements Crud{
+    private $user_id;
+    private $first_name;
+    private $last_name;
+    private $city_name;
 
-        // We can use our constructor to initialize our values
+    private $username;
+	private $password;
+    private $data;
+    private $utc_timestamp;
+    private $offset;
+    // We can use our constructor to initialize our values
         // member variables cannot be instantiated from elsewhere; They private;
         function __construct($first_name,$last_name,$city_name,$username,$password,$data,$utc_timestamp,$offset){
             $this->first_name = $first_name;
@@ -27,19 +25,18 @@
             $this->utc_timestamp = $utc_timestamp;
             $this->offset = $offset;
             $this->con = new DBConnector();
-            // $this->conn = $this->conn->conn;
         }
+
 
         /**
          * Static Constructor
          */
 
+       
         public static function create(){
             $instance = new self(null,null,null,null,null,null,null,null);
             return $instance;
-        }
-        
-        // user_id setter
+        }// user_id setter
         public function setUserId($user_id){
             $this->user_id = $user_id;
         }
@@ -81,7 +78,7 @@
             $filename = $this->data['name'];
             $utc_timestamp = $this->utc_timestamp;
             $offset = $this->offset;
-            $sql = "INSERT INTO user(first_name,last_name,user_city,username,password,filename,uct_timestamp,offset)
+            $sql = "INSERT INTO user(first_name,last_name,user_city,username,password,filename,timestamp,offset)
                      VALUES('$fn','$ln','$city','$uname','$pass','$filename','$utc_timestamp','$offset')";
             // die(print_r($sql));
             $res = mysqli_query($this->con->conn,$sql) or die("Error " .mysqli_error($con->conn));    
@@ -161,7 +158,7 @@
             unset($_SESSION['username']);
             unset($_SESSION['id']);
             session_destroy();
-            header('location:index.php');
+            header('location:login.php');
         }
 
         public function isUserExists($username){
